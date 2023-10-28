@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+enum TrainingType {
+  SOLO
+  GROUP
+  TRAINER
+}
+
+model Training {
+  id              Int @id @default(autoincrement())
+  type            TrainingType 
+  price           Int
+  gym             Gym @relation(fields: [gym_id], references: [id])
+  purchases       Purchase[]
+
+  gym_id          Int
+}
+
+model Gym {
+  id              Int @id @default(autoincrement())
+  title           String
+  admin_name      String
+  admin_number    String
+  avaliable_slots Int
+  trainings       Training[]
+}
+
+model Customer {
+  id              Int @id @default(autoincrement())
+  name            String
+  email           String
+  register        Purchase[]
+}
+
+model Purchase {
+  id              Int @id @default(autoincrement())
+  price           Int
+  training        Training @relation(fields: [training_id], references: [id])
+  customer        Customer @relation(fields: [customer_id], references: [id])
+  
+  training_id     Int
+  customer_id     Int
+}

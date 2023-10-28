@@ -1,0 +1,114 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateCustomerInput {
+  email: String!
+  name: String!
+}
+
+input CreateGymInput {
+  admin_name: String!
+  admin_number: String!
+  avaliable_slots: Int!
+  title: String!
+}
+
+input CreatePurchaseInput {
+  customer_id: Int!
+  price: Int!
+  training_id: Int!
+}
+
+input CreateTrainingInput {
+  gym_id: Int!
+  price: Int!
+  type: TrainingType!
+}
+
+type Customer {
+  email: String!
+  id: Int!
+  name: String!
+  register: [Purchase!]
+}
+
+type Gym {
+  admin_name: String!
+  admin_number: String!
+  avaliable_slots: Int!
+  id: Int!
+  title: String!
+  trainings: [Training!]
+}
+
+type Mutation {
+  createCustomer(createCustomerInput: CreateCustomerInput!): Customer!
+  createGym(createGymInput: CreateGymInput!): Gym!
+  createPurchase(createPurchaseInput: CreatePurchaseInput!): Purchase!
+  createTraining(createTrainingInput: CreateTrainingInput!): Training!
+  purchaseTraining(customerId: Int!, id: Int!): Purchase!
+  removeCustomer(id: Int!): Customer!
+  removeGym(id: Int!): Gym!
+  removePurchase(id: Int!): Purchase!
+  removeTraining(id: Int!): Training!
+  updateCustomer(id: Int!, updateCustomerInput: UpdateCustomerInput!): Customer!
+  updateGym(id: Int!, updateGymInput: UpdateGymInput!): Gym!
+  updatePurchase(id: Int!, updatePurchaseInput: UpdatePurchaseInput!): Purchase!
+  updateTraining(id: Int!, updateTrainingInput: UpdateTrainingInput!): Training!
+}
+
+type Purchase {
+  customer: Customer!
+  id: Int!
+  income: Int!
+  price: Int!
+  training: Training!
+}
+
+type Query {
+  customer(id: Int!): Customer!
+  customerPurchases(id: Int!): [Purchase!]!
+  customers: [Customer!]!
+  gym(id: Int!): Gym!
+  gyms: [Gym!]!
+  purchase(id: Int!): Purchase!
+  purchases: [Purchase!]!
+  training(id: Int!): Training!
+  trainings: [Training!]!
+}
+
+type Training {
+  gym: Gym!
+  id: Int!
+  price: Int!
+  purchases: [Purchase!]!
+  type: TrainingType!
+}
+
+enum TrainingType {
+  GROUP
+  SOLO
+  TRAINER
+}
+
+input UpdateCustomerInput {
+  email: String
+  name: String
+}
+
+input UpdateGymInput {
+  admin_name: String
+  admin_number: String
+  avaliable_slots: Int
+  title: String
+}
+
+input UpdatePurchaseInput {
+  price: Int
+}
+
+input UpdateTrainingInput {
+  price: Int
+  type: TrainingType
+}
